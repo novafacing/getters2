@@ -1,0 +1,17 @@
+[package]
+description = "Generate getters, mutable getters, setters, and copy accessors for structs and enums"
+edition = "2021"
+license = "Apache-2.0"
+name = "getters2"
+repository = "https://github.com/novafacing/getters2"
+version = "0.1.0"
+
+[lib]
+proc-macro = true
+
+[dependencies]
+darling = "0.20.3"
+proc-macro-error = "1.0.4"
+proc-macro2 = "1.0.70"
+quote = "1.0.33"
+syn = { version = "2.0.39", features = ["full"] }
