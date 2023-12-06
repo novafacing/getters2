@@ -684,6 +684,109 @@ impl ToTokens for GettersInput {
 
 #[proc_macro_derive(Getters, attributes(getters))]
 #[allow(non_snake_case)]
+/// Derive macro for automatically implementing getter and setter patterns
+///
+/// # Examples
+///
+/// Structs:
+///
+/// ```rust
+/// # use getters2::Getters;
+/// #[derive(Getters)]
+/// #[getters(deref, clone, mutable)]
+/// struct NamedVector3 {
+///    x: f32,
+///    y: f32,
+///    z: f32,
+///    #[getters(skip_deref)]
+///    // NOTE: Skip deref, can't dereference strings.
+///    name: String,
+/// }
+///
+/// let mut v = NamedVector3 { x: 1.0, y: 2.0, z: 3.0, name: "foo".to_string() };
+/// assert_eq!(v.x_ref(), &1.0);
+/// assert_eq!(v.y_deref(), 2.0);
+/// assert_eq!(v.z_clone(), 3.0);
+/// *v.x_mut() = 4.0;
+/// assert_eq!(v.x_ref(), &4.0);
+/// ```
+///
+/// Tuple Structs:
+///
+/// ```rust
+/// # use getters2::Getters;
+///
+/// #[derive(Getters)]
+/// #[getters(deref, clone, mutable)]
+/// struct TupleVector3(f32, f32, f32);
+///
+/// let mut v = TupleVector3(1.0, 2.0, 3.0);
+///
+/// assert_eq!(v.first_ref(), &1.0);
+/// assert_eq!(v.second_deref(), 2.0);
+/// assert_eq!(v.last_clone(), 3.0);
+/// *v.first_mut() = 4.0;
+/// assert_eq!(v.first_ref(), &4.0);
+/// ```
+///
+/// Named Enums:
+///
+/// ```rust
+/// # use getters2::Getters;
+///
+/// #[derive(Getters)]
+/// #[getters(deref, clone, mutable)]
+/// enum Animal {
+///   Dog {
+///     #[getters(skip_deref)]
+///     name: String,
+///     age: u8
+///   },
+///   Cat {
+///     #[getters(skip_deref)]
+///     name: String,
+///     age: u8
+///   },
+/// }
+///
+/// let mut dog = Animal::Dog { name: "Rover".to_string(), age: 5 };
+/// let mut cat = Animal::Cat { name: "Mittens".to_string(), age: 3 };
+///
+/// assert_eq!(dog.dog_name_ref(), Some(&"Rover".to_string()));
+/// assert_eq!(dog.dog_name_clone(), Some("Rover".to_string()));
+/// assert_eq!(dog.dog_age_ref(), Some(&5));
+/// assert_eq!(dog.dog_age_deref(), Some(5));
+/// assert_eq!(cat.cat_name_ref(), Some(&"Mittens".to_string()));
+/// assert_eq!(cat.cat_name_clone(), Some("Mittens".to_string()));
+/// assert_eq!(cat.cat_age_ref(), Some(&3));
+/// assert_eq!(cat.cat_age_deref(), Some(3));
+/// ```
+///
+/// Tuple Enums:
+///
+/// ```rust
+/// # use getters2::Getters;
+///
+/// #[derive(Getters)]
+/// #[getters(clone, mutable)]
+/// enum Animal {
+///   Dog(String, u8),
+///   Cat(String, u8),
+/// }
+///
+/// let mut dog = Animal::Dog("Rover".to_string(), 5);
+/// let mut cat = Animal::Cat("Mittens".to_string(), 3);
+///
+/// assert_eq!(dog.dog_first_ref(), Some(&"Rover".to_string()));
+/// assert_eq!(dog.dog_first_clone(), Some("Rover".to_string()));
+/// assert_eq!(dog.dog_last_ref(), Some(&5));
+/// assert_eq!(dog.dog_last_clone(), Some(5));
+/// assert_eq!(cat.cat_first_ref(), Some(&"Mittens".to_string()));
+/// assert_eq!(cat.cat_first_clone(), Some("Mittens".to_string()));
+/// assert_eq!(cat.cat_last_ref(), Some(&3));
+/// assert_eq!(cat.cat_last_clone(), Some(3));
+/// ```
+///
 pub fn Getters(input: TokenStream) -> TokenStream {
     let getters = match GettersInput::from_derive_input(&parse_macro_input!(input as DeriveInput)) {
         Ok(g) => g,
