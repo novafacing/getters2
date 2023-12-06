@@ -6,7 +6,7 @@ name = "getters2"
 repository = "https://github.com/novafacing/getters2"
 version = "0.1.1"
 readme = "README.md"
-keywords = ["derive", "getter", "setter", "accessor", "struct", "enum", "macro"]
+keywords = ["derive", "getter", "setter", "accessor", "macro"]
 
 [lib]
 proc-macro = true
