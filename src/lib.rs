@@ -262,6 +262,8 @@
 //! }
 //! ```
 
+#![allow(unused_variables)]
+
 use darling::{
     ast::{Data, Fields},
     util::Flag,
@@ -460,6 +462,7 @@ impl GettersInput {
         }
     }
 
+    #[allow(clippy::too_many_arguments)]
     fn method_variant(
         &self,
         field: &GettersField,
@@ -487,13 +490,9 @@ impl GettersInput {
 
         let (immutable, maybe_mutable, maybe_clone, maybe_deref) =
             if let Some(ident) = field.ident.as_ref() {
-                #[allow(unused)]
                 let ident_ref = format_ident!("{}_{}_ref", prefix, ident);
-                #[allow(unused)]
                 let ident_mut = format_ident!("{}_{}_mut", prefix, ident);
-                #[allow(unused)]
                 let ident_clone = format_ident!("{}_{}_clone", prefix, ident);
-                #[allow(unused)]
                 let ident_deref = format_ident!("{}_{}_deref", prefix, ident);
                 (
                     immutable
@@ -552,8 +551,8 @@ impl GettersInput {
                 let name_mut = format_ident!("{}_{}_mut", prefix, name);
                 let name_clone = format_ident!("{}_{}_clone", prefix, name);
                 let name_deref = format_ident!("{}_{}_deref", prefix, name);
-                let elements = tuple_elements(max);
-                let elements_mut = tuple_elements_mut(max);
+                let elements = tuple_elements(index, max);
+                let elements_mut = tuple_elements_mut(index, max);
                 let element = tuple_element_name(index);
 
                 (
@@ -743,29 +742,43 @@ fn tuple_element_name(index: usize) -> Ident {
     Ident::new(TUPLE_ELEMENTS[index], Span::call_site())
 }
 
-fn tuple_elements(max: usize) -> TokenStream2 {
+fn tuple_elements(index: usize, max: usize) -> TokenStream2 {
     (0..max)
         .map(tuple_element_name)
         .enumerate()
         .map(|(i, n)| {
-            if i == max - 1 {
-                quote!(ref #n)
+            let ident = if i == index {
+                format_ident!("{}", n)
             } else {
-                quote!(ref #n,)
+                format_ident!("_{}", n)
+            };
+
+            if i == max - 1 {
+                quote!(ref #ident)
+            } else {
+                quote!(ref #ident,)
             }
         })
         .collect::<TokenStream2>()
 }
 
-fn tuple_elements_mut(max: usize) -> TokenStream2 {
+fn tuple_elements_mut(index: usize, max: usize) -> TokenStream2 {
     (0..max)
         .map(tuple_element_name)
         .enumerate()
         .map(|(i, n)| {
-            if i == max - 1 {
-                quote!(ref mut #n)
+            let ident = if i == index {
+                format_ident!("{}", n)
             } else {
-                quote!(ref mut #n,)
+                format_ident!("_{}", n)
+            };
+
+            let maybe_mut = if i == index { quote!(mut) } else { quote!() };
+
+            if i == max - 1 {
+                quote!(ref #maybe_mut #ident)
+            } else {
+                quote!(ref #maybe_mut #ident,)
             }
         })
         .collect::<TokenStream2>()

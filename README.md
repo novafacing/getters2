@@ -6,7 +6,32 @@ Getters2 is the *real* best "auto-getters"/"auto-setters" crate for Rust.
 * Support for named, tuple, and newtype structs
 * Support for named, tuple, and newtype *enums*
 
-## Structs
+- [Getters2](#getters2)
+  - [Installation](#installation)
+  - [Examples](#examples)
+    - [Structs](#structs)
+    - [Enums](#enums)
+  - [Prior Art](#prior-art)
+
+## Installation
+
+```sh
+cargo add getters2
+```
+
+or, add it to `Cargo.toml`
+
+```toml
+[dependencies]
+getters2 = "0.1.0"
+```
+
+
+## Examples
+
+Getters2 has a dead simple API.
+
+### Structs
 
 ```rust
 use getters2::Getters;
@@ -38,7 +63,7 @@ assert_eq!(v.y_ref(), &5.0);
 assert_eq!(v.z_ref(), &6.0);
 ```
 
-## Enums
+### Enums
 
 ```rust
 use getters2::Getters;
