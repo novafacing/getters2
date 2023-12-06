@@ -4,7 +4,7 @@ edition = "2021"
 license = "Apache-2.0"
 name = "getters2"
 repository = "https://github.com/novafacing/getters2"
-version = "0.1.1"
+version = "0.1.2"
 readme = "README.md"
 keywords = ["derive", "getter", "setter", "accessor", "macro"]
 
