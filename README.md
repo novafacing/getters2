@@ -36,7 +36,7 @@ Getters2 has a dead simple API.
 ```rust
 use getters2::Getters;
 #[derive(Getters)]
-#[derive(getters(mutable, clone, deref))]
+#[getters(mutable, clone, deref)]
 struct Vector3 {
    x: f32,
    y: f32,
