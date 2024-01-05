@@ -1,3 +1,6 @@
+# Copyright (C) 2023-2024 Rowan Hart
+# SPDX-License-Identifier: Apache-2.0
+
 [package]
 description = "Generate getters, mutable getters, setters, and copy accessors for structs and enums"
 edition = "2021"

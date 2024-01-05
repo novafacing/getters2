@@ -1,3 +1,6 @@
+// Copyright (C) 2023-2024 Rowan Hart
+// SPDX-License-Identifier: Apache-2.0
+
 #![allow(clippy::disallowed_names)]
 
 use getters2::Getters;

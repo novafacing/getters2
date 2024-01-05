@@ -1,3 +1,6 @@
+// Copyright (C) 2023 Rowan Hart
+// SPDX-License-Identifier: Apache-2.0
+
 //! Derive Macro for automatically implementing getter and setter patterns
 //! for structs and enums.
 //!
@@ -263,6 +266,7 @@
 //! ```
 
 #![allow(unused_variables)]
+#![deny(missing_docs)]
 
 use darling::{
     ast::{Data, Fields},
