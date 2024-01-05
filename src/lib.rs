@@ -1,4 +1,4 @@
-// Copyright (C) 2023 Rowan Hart
+// Copyright (C) 2023-2024 Rowan Hart
 // SPDX-License-Identifier: Apache-2.0
 
 //! Derive Macro for automatically implementing getter and setter patterns
