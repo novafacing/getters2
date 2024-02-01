@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 #![allow(clippy::disallowed_names)]
+#![deny(missing_docs)]
 
 use getters2::Getters;
 

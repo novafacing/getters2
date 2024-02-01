@@ -380,6 +380,7 @@ impl GettersInput {
                     immutable
                         .then_some(quote! {
                             #[inline(always)]
+                            /// Return an immutable reference to the field
                             pub fn #ident_ref(&self) -> &#ty {
                                 &self.#ident
                             }
@@ -388,6 +389,7 @@ impl GettersInput {
                     mutable
                         .then_some(quote! {
                             #[inline(always)]
+                            /// Return a mutable reference to the field
                             pub fn #ident_mut(&mut self) -> &mut #ty {
                                 &mut self.#ident
                             }
@@ -396,6 +398,7 @@ impl GettersInput {
                     clone
                         .then_some(quote! {
                             #[inline(always)]
+                            /// Return a clone of the field
                             pub fn #ident_clone(&self) -> #ty {
                                 self.#ident.clone()
                             }
@@ -404,6 +407,7 @@ impl GettersInput {
                     deref
                         .then_some(quote! {
                             #[inline(always)]
+                            /// Return a copy of the field
                             pub fn #ident_deref(&self) -> #ty {
                                 self.#ident
                             }
@@ -426,6 +430,7 @@ impl GettersInput {
                     immutable
                         .then_some(quote! {
                             #[inline(always)]
+                            /// Return an immutable reference to the field
                             pub fn #name_ref(&self) -> &#ty {
                                 &self.#index
                             }
@@ -434,6 +439,7 @@ impl GettersInput {
                     mutable
                         .then_some(quote! {
                             #[inline(always)]
+                            /// Return a mutable reference to the field
                             pub fn #name_mut(&mut self) -> &mut #ty {
                                 &mut self.#index
                             }
@@ -442,6 +448,7 @@ impl GettersInput {
                     clone
                         .then_some(quote! {
                             #[inline(always)]
+                            /// Return a clone of the field
                             pub fn #name_clone(&self) -> #ty {
                                 self.#index.clone()
                             }
@@ -450,6 +457,7 @@ impl GettersInput {
                     deref
                         .then_some(quote! {
                             #[inline(always)]
+                            /// Return a copy of the field
                             pub fn #name_deref(&self) -> #ty {
                                 self.#index
                             }
@@ -502,6 +510,7 @@ impl GettersInput {
                     immutable
                         .then_some(quote! {
                             #[inline(always)]
+                            /// Return an immutable reference to the field
                             pub fn #ident_ref(&self) -> Option<&#ty> {
                                 if let #enum_ident::#variant_ident { #ident, .. } = self {
                                     Some(#ident)
@@ -514,6 +523,7 @@ impl GettersInput {
                     mutable
                         .then_some(quote! {
                             #[inline(always)]
+                            /// Return a mutable reference to the field
                             pub fn #ident_mut(&mut self) -> Option<&mut #ty> {
                                 if let #enum_ident::#variant_ident { ref mut #ident, .. } = self {
                                     Some(#ident)
@@ -526,6 +536,7 @@ impl GettersInput {
                     clone
                         .then_some(quote! {
                             #[inline(always)]
+                            /// Return a clone of the field
                             pub fn #ident_clone(&self) -> Option<#ty> {
                                 if let #enum_ident::#variant_ident { #ident, .. } = self {
                                     Some(#ident.clone())
@@ -538,6 +549,7 @@ impl GettersInput {
                     deref
                         .then_some(quote! {
                             #[inline(always)]
+                            /// Return a copy of the field
                             pub fn #ident_deref(&self) -> Option<#ty> {
                                 if let #enum_ident::#variant_ident { #ident, .. } = self {
                                     Some(*#ident)
@@ -563,6 +575,7 @@ impl GettersInput {
                     immutable
                         .then_some(quote! {
                             #[inline(always)]
+                            /// Return an immutable reference to the field
                             pub fn #name_ref(&self) -> Option<&#ty> {
                                 if let #enum_ident::#variant_ident(#elements) = self {
                                     Some(#element)
@@ -575,6 +588,7 @@ impl GettersInput {
                     mutable
                         .then_some(quote! {
                             #[inline(always)]
+                            /// Retur a mutable reference to the field
                             pub fn #name_mut(&mut self) -> Option<&mut #ty> {
                                 if let #enum_ident::#variant_ident(#elements_mut) = self {
                                     Some(#element)
@@ -587,6 +601,7 @@ impl GettersInput {
                     clone
                         .then_some(quote! {
                             #[inline(always)]
+                            /// Return a clone of the field
                             pub fn #name_clone(&self) -> Option<#ty> {
                                 if let #enum_ident::#variant_ident(#elements) = self {
                                     Some(#element.clone())
@@ -599,6 +614,7 @@ impl GettersInput {
                     deref
                         .then_some(quote! {
                             #[inline(always)]
+                            /// Return a copy of the field
                             pub fn #name_deref(&self) -> Option<#ty> {
                                 if let #enum_ident::#variant_ident(#elements) = self {
                                     Some(*#element)
